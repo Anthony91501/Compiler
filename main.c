@@ -11,7 +11,7 @@ bool hasExtension(char* filename){
 	bool Extension_Found = false;
 	int i = 0;
 	
-	for(i; i < strlen(filename) && !Extension_Found; i++){
+	for(i; i < strlen(filename) && Extension_Found == false; i++){
 		if(filename[i] == '.'){
 			Extension_Found = true;
 		}
@@ -20,36 +20,37 @@ bool hasExtension(char* filename){
 	return Extension_Found;
 }
 
-bool promptFileName(char* Input_File_Name) {
-	bool NotEntered = false;
+void promptFileName(char* Input_File_Name) {
 	printf("Enter the input file name: ");
 	scanf("%s", Input_File_Name);
-	
-	return NotEntered;
+	if (Input_File_Name[0] == '\0') {
+	}
 }
 
-bool openInputFile(char* Input_File_Name, FILE* Input_File) {
+bool openInputFile() {
 	bool terminate = false;
-	//If no extension add .IN
+	/*If no extension add .IN */
 	if(!hasExtension(Input_File_Name)) {
 		addExtension(Input_File_Name, ".IN");
 	}
 	
 	/*if does not exist*/
-	Input_File = fopen(Input_File_Name, "r");
-	if(Input_File == NULL){
-		//promptFileName();
+	if(Input_File = fopen(Input_File_Name, "r") == NULL){
+		/* promptFileName(); */
 	}
 }
 
-void openOutputFile(char* Output_File_Name, FILE* Output_File) {
-	//If no extension add .OUT
+void openOutputFile() {
+	/* Print for testing purposeses */
+	printf("The output file name is %s\n", argv[2]);
+	/* Copy string from command line args */
+	strcpy(Output_File_Name, argv[2]);
+	/* If no extension add .OUT */
 	if(!hasExtension(Output_File_Name)) {
 		addExtension(Output_File_Name, ".OUT");
 	}
 		
-	Output_File = fopen(Output_File_Name, "w");
-	//if exists choose to overwrite, enter new output file name, or terminate
+	Output_File = fopen(Output_File_Name, w);
 }
 
 int main(int argc, char *argv[]) {
@@ -60,24 +61,27 @@ int main(int argc, char *argv[]) {
 	
 	/*Command Line Parameters*/
 	if(argc == 3) {
-		//Copy string from command line args
+		/* Copy string from command line args */
 		strcpy(Input_File_Name, argv[1]);
 		
-		if(openInputFile(Input_File_Name, Input_File)){
-			//Copy string from command line args
+		if(openInputFile()){
+			/* Copy string from command line args */
 			strcpy(Input_File_Name, argv[1]);
 		}
 		
-		
-		
 	}else if(argc == 2) {
-		//Print for testing purposeses
+		/* Print for testing purposeses */
 		printf("The input file name is %s\n", argv[1]);
-		//Copy string from command line args
+		/* Copy string from command line args */
 		strcpy(Input_File_Name, argv[1]);
 	}else {
 		
 	}
 		
-	return 0;
+	
+	/* closing files */
+	fclose(Input_File);
+  	fclose(Output_File);
+	
+	
 }
